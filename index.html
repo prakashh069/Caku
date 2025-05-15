@@ -951,9 +951,9 @@
         <button class="button" id="startButton">Birthday Surprise</button>
     </div>
 
-    <audio id="birthdayMusic" preload="auto" playsinline hidden>
-        <source src="/hb.mp3" type="audio/mpeg">
-        <source src="/hb.wav" type="audio/wav">
+    <audio id="birthdayMusic" preload="auto" playsinline>
+        <source src="hb.mp3" type="audio/mpeg">
+        <source src="hb.wav" type="audio/wav">
         Your browser does not support the audio element.
     </audio>
 
@@ -1207,11 +1207,27 @@
                 });
             }
             
+            function playAudio() {
+                audio.muted = false;
+                audio.currentTime = 0; // Reset to start
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("Audio playing successfully on mobile");
+                    }).catch(error => {
+                        console.error("Mobile audio playback failed:", error);
+                    });
+                }
+            }
+
             function startAnimation(e) {
                 e.preventDefault();
                 startButton.classList.add("hidden");
                 message.style.opacity = "0";
                 message.style.animation = "none";
+                
+                // Play audio immediately after user interaction
+                playAudio();
                 
                 for (let i = 0; i < 3; i++) {
                     const firework = document.createElement("div");
@@ -1223,8 +1239,6 @@
                     firework.style.animation = `fireworkBurst ${Math.random() * 0.5 + 0.5}s forwards`;
                     setTimeout(() => firework.remove(), 1000);
                 }
-                
-                audio.play().catch(error => console.error("Music playback failed:", error));
                 
                 cakeContainer.style.opacity = "1";
                 
@@ -1252,8 +1266,8 @@
             }
             
             startButton.addEventListener("click", startAnimation);
-            
             startButton.addEventListener("touchstart", startAnimation);
+            startButton.addEventListener("touchend", startAnimation); // Additional mobile event
             
             startButton.addEventListener("mouseover", () => {
                 for (let i = 0; i < 3; i++) {
@@ -1265,6 +1279,14 @@
                     sparkle.style.animation = `sparkle ${Math.random() * 1 + 0.5}s forwards`;
                     setTimeout(() => sparkle.remove(), 1200);
                 }
+            });
+            
+            // Debug audio state on load
+            audio.addEventListener("loadeddata", () => {
+                console.log("Audio file loaded successfully");
+            });
+            audio.addEventListener("error", (e) => {
+                console.error("Audio loading error:", e);
             });
             
             initGanacheDrips();
