@@ -579,7 +579,9 @@
         
         @keyframes float4 {
             0% { transform: translateY(0) translateX(0) rotate(0deg) scale(1); }
-            25% { transform: translateY(-60vh) translateX(-10px) rotate(-3deg) scale(1.02); }
+            25%
+
+ { transform: translateY(-60vh) translateX(-10px) rotate(-3deg) scale(1.02); }
             50% { transform: translateY(-120vh) translateX(12px) rotate(4deg) scale(1.03); }
             75% { transform: translateY(-60vh) translateX(-8px) rotate(-2deg) scale(1.01); }
             100% { transform: translateY(0) translateX(0) rotate(0deg) scale(1); }
@@ -830,7 +832,7 @@
     </div>
 
     <audio id="birthdayMusic" preload="auto" playsinline hidden>
-        <source src="hb.mp3" type="audio/wav">
+        <source src="/hb.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -982,7 +984,9 @@
                 }
                 
                 const color = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.background = `linear-gradient(135deg, ${color}, white, ${color})`;
+                confetti.style.background = `linear-gradient(135deg, ${color
+
+}, white, ${color})`;
                 confetti.style.boxShadow = `0 0 8px ${color}`;
                 
                 const angle = Math.random() * Math.PI * 2;
