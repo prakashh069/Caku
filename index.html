@@ -308,7 +308,7 @@
             100% { top: -24px; opacity: 1; transform: translateX(-50%) scale(1); }
         }
         
-        .strawberry:before {
+        .st Tien:before {
             content: "";
             position: absolute;
             top: -6px;
@@ -579,9 +579,7 @@
         
         @keyframes float4 {
             0% { transform: translateY(0) translateX(0) rotate(0deg) scale(1); }
-            25%
-
- { transform: translateY(-60vh) translateX(-10px) rotate(-3deg) scale(1.02); }
+            25% { transform: translateY(-60vh) translateX(-10px) rotate(-3deg) scale(1.02); }
             50% { transform: translateY(-120vh) translateX(12px) rotate(4deg) scale(1.03); }
             75% { transform: translateY(-60vh) translateX(-8px) rotate(-2deg) scale(1.01); }
             100% { transform: translateY(0) translateX(0) rotate(0deg) scale(1); }
@@ -833,6 +831,7 @@
 
     <audio id="birthdayMusic" preload="auto" playsinline hidden>
         <source src="/hb.mp3" type="audio/mpeg">
+        <source src="/hb.wav" type="audio/wav">
         Your browser does not support the audio element.
     </audio>
 
@@ -984,9 +983,7 @@
                 }
                 
                 const color = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.background = `linear-gradient(135deg, ${color
-
-}, white, ${color})`;
+                confetti.style.background = `linear-gradient(135deg, ${color}, white, ${color})`;
                 confetti.style.boxShadow = `0 0 8px ${color}`;
                 
                 const angle = Math.random() * Math.PI * 2;
@@ -1062,7 +1059,8 @@
             
             function startAnimation(e) {
                 e.preventDefault();
-                console.log("Button clicked - Starting animation");
+                console.log("Button clicked/tapped - Starting animation");
+                console.log("Event type:", e.type);
                 startButton.classList.add("hidden");
                 resetAnimation();
                 initGanacheDrips();
@@ -1070,8 +1068,13 @@
                 message.style.animation = "none";
                 
                 audio.muted = false;
-                audio.play().catch(error => {
+                console.log("Attempting to play audio...");
+                audio.play().then(() => {
+                    console.log("Audio playback started successfully");
+                }).catch(error => {
                     console.error("Audio playback failed:", error.message);
+                    console.error("Error name:", error.name);
+                    console.error("Error stack:", error.stack);
                     if (error.name === "NotAllowedError") {
                         console.log("Audio blocked: Requires user interaction.");
                     } else if (error.name === "NotSupportedError") {
@@ -1159,7 +1162,6 @@
             }
             
             startButton.addEventListener("click", startAnimation);
-            startButton.addEventListener("touchstart", startAnimation, { passive: false });
             
             initGanacheDrips();
         });
